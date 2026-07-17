@@ -1,0 +1,132 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Badge } from "@/components/ui/Badge";
+import { Card } from "@/components/ui/Card";
+import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
+import { PROFESSION_LABELS } from "@/lib/types";
+
+interface Props {
+  params: { slug: string };
+}
+
+function getProfessional(slug: string) {
+  return MOCK_PROFESSIONALS.find(
+    (p) => p.slug === slug && p.zichtbaar && p.goedkeuringsstatus === "approved"
+  );
+}
+
+export function generateMetadata({ params }: Props): Metadata {
+  const professional = getProfessional(params.slug);
+  if (!professional) return { title: "Professional niet gevonden" };
+  return {
+    title: professional.naam,
+    description: professional.bio,
+  };
+}
+
+export function generateStaticParams() {
+  return MOCK_PROFESSIONALS.map((p) => ({ slug: p.slug }));
+}
+
+export default function ProfessionalDetailPage({ params }: Props) {
+  const professional = getProfessional(params.slug);
+  if (!professional) notFound();
+
+  return (
+    <section className="section">
+      <div className="container-page max-w-3xl">
+        <Link
+          href="/professionals"
+          className="mb-8 inline-block text-sm text-forest-800 hover:underline"
+        >
+          ← Terug naar alle professionals
+        </Link>
+
+        <div className="mb-6 flex items-center gap-5">
+          <div
+            className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-forest-100 text-2xl font-semibold text-forest-800"
+            aria-hidden="true"
+          >
+            {professional.naam
+              .split(" ")
+              .map((n) => n[0])
+              .slice(0, 2)
+              .join("")}
+          </div>
+          <div>
+            <h1 className="font-serif text-3xl font-semibold text-forest-900">
+              {professional.naam}
+            </h1>
+            <p className="text-ink-600">
+              {PROFESSION_LABELS[professional.beroep]}
+              {professional.organisatie ? ` · ${professional.organisatie}` : ""}
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {professional.specialisaties.map((s) => (
+            <Badge key={s}>{s}</Badge>
+          ))}
+          {professional.online_consult && <Badge tone="amber">Online consult mogelijk</Badge>}
+        </div>
+
+        <Card className="mb-6">
+          <h2 className="mb-2 font-serif text-lg font-semibold text-forest-900">
+            Over deze professional
+          </h2>
+          <p className="leading-relaxed text-ink-700">{professional.bio}</p>
+        </Card>
+
+        <Card className="mb-6">
+          <h2 className="mb-4 font-serif text-lg font-semibold text-forest-900">
+            Praktijkgegevens
+          </h2>
+          <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-ink-500">Locatie</dt>
+              <dd className="text-ink-800">{professional.locatie}, {professional.provincie}</dd>
+            </div>
+            {professional.big_registratie && (
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-ink-500">Registratie</dt>
+                <dd className="text-ink-800">{professional.big_registratie}</dd>
+              </div>
+            )}
+            {professional.website && (
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-ink-500">Website</dt>
+                <dd>
+                  <a href={professional.website} className="text-forest-800 hover:underline">
+                    {professional.website}
+                  </a>
+                </dd>
+              </div>
+            )}
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-ink-500">E-mail</dt>
+              <dd>
+                <a href={`mailto:${professional.email}`} className="text-forest-800 hover:underline">
+                  {professional.email}
+                </a>
+              </dd>
+            </div>
+            {professional.telefoonnummer && (
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-ink-500">Telefoon</dt>
+                <dd className="text-ink-800">{professional.telefoonnummer}</dd>
+              </div>
+            )}
+          </dl>
+        </Card>
+
+        <p className="text-sm text-ink-500">
+          Dit profiel is door de redactie beoordeeld en goedgekeurd. Neem
+          voor medische vragen rechtstreeks contact op met de professional —
+          niet via het algemene contactformulier van Low Carb Netherlands.
+        </p>
+      </div>
+    </section>
+  );
+}
