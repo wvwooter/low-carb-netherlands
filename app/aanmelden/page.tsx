@@ -83,7 +83,7 @@ export default function AanmeldenPage() {
               <TextField label="Beroepsregistratie (bv. BIG-register)" htmlFor="beroepsregistratie" name="beroepsregistratie" hint="Bijvoorbeeld BIG-register, Kwaliteitsregister Paramedici." />
               <TextField label="Registratienummer" htmlFor="registratienummer" name="registratienummer" />
             </div>
-            <TextField label="Website" htmlFor="website" name="website" type="url" placeholder="https://" />
+            <TextField label="Website" htmlFor="website" name="website" type="text" placeholder="bijv. mijnpraktijk.nl" hint="Met of zonder https:// ervoor, allebei is goed." />
           </fieldset>
 
           <fieldset className="space-y-5">

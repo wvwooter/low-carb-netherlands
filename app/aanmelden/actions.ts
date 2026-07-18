@@ -33,6 +33,14 @@ export async function submitProfessionalApplication(formData: FormData) {
   const achternaam = String(formData.get("achternaam") ?? "").trim();
   const beroep = String(formData.get("beroep") ?? "").trim();
 
+  // Website is een gewoon tekstveld (niet type="url"): browsers blokkeerden
+  // anders stil de hele formulier-submit als iemand een adres zonder
+  // "https://" invulde. Hier vullen we het schema aan indien nodig.
+  const websiteRuw = String(formData.get("website") ?? "").trim();
+  const website = websiteRuw && !/^https?:\/\//i.test(websiteRuw)
+    ? `https://${websiteRuw}`
+    : websiteRuw;
+
   if (!email || !voornaam || !achternaam || !beroep) {
     throw new Error("Verplichte velden ontbreken.");
   }
@@ -52,7 +60,7 @@ export async function submitProfessionalApplication(formData: FormData) {
     postcode: String(formData.get("postcode") ?? ""),
     plaats: String(formData.get("plaats") ?? ""),
     provincie: String(formData.get("provincie") ?? ""),
-    website: String(formData.get("website") ?? ""),
+    website,
     email,
     telefoonnummer: String(formData.get("telefoonnummer") ?? ""),
     online_begeleiding: formData.get("online_begeleiding") === "on",
