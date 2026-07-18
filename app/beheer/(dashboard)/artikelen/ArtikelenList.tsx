@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { togglePublished } from "./actions";
+import { togglePublished, deleteArticle } from "./actions";
 
 interface ArticleRow {
   id: string;
@@ -33,12 +34,25 @@ export function ArtikelenList({ articles }: { articles: ArticleRow[] }) {
     });
   }
 
+  function handleDelete(id: string) {
+    if (!window.confirm("Dit artikel definitief verwijderen?")) return;
+    setError(null);
+    startTransition(async () => {
+      const result = await deleteArticle(id);
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    });
+  }
+
   if (items.length === 0) {
     return (
       <Card>
         <p className="text-ink-500">
-          Nog geen artikelen. Voeg artikelen toe via de Supabase Table Editor —
-          een schrijfinterface volgt in een latere fase.
+          Nog geen artikelen. Klik hierboven op &quot;Nieuw artikel&quot; om
+          er een toe te voegen.
         </p>
       </Card>
     );
@@ -65,16 +79,32 @@ export function ArtikelenList({ articles }: { articles: ArticleRow[] }) {
               {new Date(item.publicatiedatum).toLocaleDateString("nl-NL")}
             </p>
           </div>
-          <label className="flex items-center gap-2 text-sm font-medium text-ink-700">
-            <input
-              type="checkbox"
-              checked={item.gepubliceerd}
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 text-sm font-medium text-ink-700">
+              <input
+                type="checkbox"
+                checked={item.gepubliceerd}
+                disabled={pending}
+                onChange={(e) => handleToggle(item.id, e.target.checked)}
+                className="h-4 w-4 rounded border-ink-300 text-forest-700 focus:ring-forest-300"
+              />
+              Gepubliceerd
+            </label>
+            <Link
+              href={`/beheer/artikelen/${item.id}/bewerken`}
+              className="text-sm font-medium text-forest-800 hover:underline"
+            >
+              Bewerken
+            </Link>
+            <button
+              type="button"
               disabled={pending}
-              onChange={(e) => handleToggle(item.id, e.target.checked)}
-              className="h-4 w-4 rounded border-ink-300 text-forest-700 focus:ring-forest-300"
-            />
-            Gepubliceerd
-          </label>
+              onClick={() => handleDelete(item.id)}
+              className="text-sm font-medium text-red-700 hover:underline"
+            >
+              Verwijderen
+            </button>
+          </div>
         </Card>
       ))}
     </div>
