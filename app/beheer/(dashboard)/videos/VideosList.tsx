@@ -70,6 +70,11 @@ export function VideosList({ videos }: { videos: Video[] }) {
                 <h3 className="font-serif text-base font-semibold text-forest-900">
                   {item.titel}
                 </h3>
+                {item.bron && (
+                  <span className="mb-1 inline-block rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                    {item.bron}
+                  </span>
+                )}
                 {item.beschrijving && (
                   <p className="line-clamp-1 text-sm text-ink-500">{item.beschrijving}</p>
                 )}

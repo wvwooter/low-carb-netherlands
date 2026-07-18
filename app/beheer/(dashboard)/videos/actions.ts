@@ -15,6 +15,7 @@ export async function addVideo(
   const titel = String(formData.get("titel") || "").trim();
   const beschrijving = String(formData.get("beschrijving") || "").trim();
   const youtubeUrl = String(formData.get("youtube_url") || "").trim();
+  const bron = String(formData.get("bron") || "").trim();
 
   if (!titel || !youtubeUrl) {
     return { error: "Titel en YouTube-link zijn verplicht." };
@@ -27,10 +28,14 @@ export async function addVideo(
   const supabase = createSupabaseServerClient();
   if (!supabase) return { error: "Supabase is niet geconfigureerd." };
 
+  // Direct gepubliceerd, zodat een nieuw toegevoegde video meteen zichtbaar
+  // is. Depubliceren kan daarna via de schakelaar in het overzicht.
   const { error } = await supabase.from("videos").insert({
     titel,
     beschrijving: beschrijving || null,
     youtube_url: youtubeUrl,
+    bron: bron || null,
+    gepubliceerd: true,
   });
 
   if (error) return { error: "Toevoegen is mislukt." };

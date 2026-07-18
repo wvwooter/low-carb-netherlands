@@ -8,7 +8,7 @@ export default async function BeheerVideosPage() {
   const { data } = supabase
     ? await supabase
         .from("videos")
-        .select("id, titel, beschrijving, youtube_url, gepubliceerd, aangemaakt_op")
+        .select("id, titel, beschrijving, youtube_url, gepubliceerd, bron, aangemaakt_op")
         .order("aangemaakt_op", { ascending: false })
     : { data: [] };
 

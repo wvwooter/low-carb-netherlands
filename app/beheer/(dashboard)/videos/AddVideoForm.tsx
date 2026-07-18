@@ -52,6 +52,12 @@ export function AddVideoForm() {
           name="beschrijving"
           rows={3}
         />
+        <TextField
+          label="Bron (optioneel)"
+          htmlFor="bron"
+          name="bron"
+          placeholder="Bijv. Low Carb Down Under — laat leeg voor eigen content"
+        />
         {state?.error && (
           <p className="field-error" role="alert">
             {state.error}

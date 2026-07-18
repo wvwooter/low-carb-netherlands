@@ -143,5 +143,6 @@ export interface Video {
   beschrijving: string | null;
   youtube_url: string;
   gepubliceerd: boolean;
+  bron: string | null;
   aangemaakt_op: string;
 }
