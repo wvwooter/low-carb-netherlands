@@ -11,6 +11,7 @@ const NAV = [
   { href: "/beheer/professionals", label: "Professionals" },
   { href: "/beheer/artikelen", label: "Artikelen" },
   { href: "/beheer/evenementen", label: "Evenementen" },
+  { href: "/beheer/videos", label: "Video's" },
 ] as const;
 
 export default async function BeheerDashboardLayout({

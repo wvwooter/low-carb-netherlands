@@ -136,3 +136,12 @@ export interface EventItem {
   prijs: string;
   afbeelding_url: string;
 }
+
+export interface Video {
+  id: string;
+  titel: string;
+  beschrijving: string | null;
+  youtube_url: string;
+  gepubliceerd: boolean;
+  aangemaakt_op: string;
+}
