@@ -11,11 +11,18 @@ export async function middleware(request: NextRequest) {
 
   const isBeheerRoute = request.nextUrl.pathname.startsWith("/beheer");
   const isLoginRoute = request.nextUrl.pathname === "/beheer/login";
+  // Wachtwoord-vergeten en nieuw-wachtwoord moeten ook zonder (volledige)
+  // sessie bereikbaar zijn: de reset-link zet de sessie via een URL-hash
+  // die alleen client-side leesbaar is, dus de server ziet 'm nog niet.
+  const isPublicAuthRoute =
+    isLoginRoute ||
+    request.nextUrl.pathname === "/beheer/wachtwoord-vergeten" ||
+    request.nextUrl.pathname === "/beheer/nieuw-wachtwoord";
 
   // Supabase nog niet gekoppeld: laat publieke routes gewoon werken, maar
   // blokkeer /beheer volledig (geen auth mogelijk zonder Supabase).
   if (!url || !anonKey) {
-    if (isBeheerRoute && !isLoginRoute) {
+    if (isBeheerRoute && !isPublicAuthRoute) {
       return NextResponse.redirect(new URL("/beheer/login", request.url));
     }
     return response;
@@ -43,7 +50,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (isBeheerRoute && !isLoginRoute && !user) {
+  if (isBeheerRoute && !isPublicAuthRoute && !user) {
     return NextResponse.redirect(new URL("/beheer/login", request.url));
   }
 

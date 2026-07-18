@@ -5,6 +5,7 @@ import { signIn } from "./actions";
 import { TextField } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/layout/Logo";
+import Link from "next/link";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -54,6 +55,11 @@ export default function BeheerLoginPage() {
           )}
           <SubmitButton />
         </form>
+        <p className="mt-6 text-center text-sm text-ink-500">
+          <Link href="/beheer/wachtwoord-vergeten" className="text-forest-800 hover:underline">
+            Wachtwoord vergeten?
+          </Link>
+        </p>
       </div>
     </div>
   );
