@@ -28,6 +28,14 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/bronnen"
+                className="text-sm text-ink-500 hover:text-forest-800"
+              >
+                Wetenschappelijke bronnen
+              </Link>
+            </li>
           </ul>
         </div>
 

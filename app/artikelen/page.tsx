@@ -33,6 +33,13 @@ export default function ArtikelenPage({ searchParams }: Props) {
             artikelen zijn voorbeeldcontent ter illustratie van de
             structuur.
           </p>
+          <p className="mt-3 text-sm text-ink-500">
+            Op zoek naar de wetenschappelijke literatuur zelf? Bekijk onze{" "}
+            <Link href="/bronnen" className="font-medium text-forest-800 underline">
+              wetenschappelijke bronnen
+            </Link>
+            .
+          </p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2">
