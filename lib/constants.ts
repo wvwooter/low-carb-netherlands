@@ -39,6 +39,7 @@ export const MAIN_NAV = [
   { href: "/over-ons", label: "Over ons" },
   { href: "/professionals", label: "Professionals" },
   { href: "/artikelen", label: "Artikelen" },
+  { href: "/boeken", label: "Boeken" },
   { href: "/evenementen", label: "Evenementen" },
   { href: "/videos", label: "Video's" },
   { href: "/aanmelden", label: "Aanmelden" },
