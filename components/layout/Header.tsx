@@ -6,51 +6,54 @@ import { useState } from "react";
 import { Logo } from "./Logo";
 import { MAIN_NAV } from "@/lib/constants";
 
+// In de balk zelf tonen we bewust niet alle MAIN_NAV-items: "Home" is
+// overbodig naast het logo (dat al naar / linkt), en "Contact" staat ook
+// in de footer. Zo blijft de balk rustig. Het mobiele menu toont wel de
+// volledige lijst.
+const DESKTOP_NAV = MAIN_NAV.filter(
+  (item) => !["/", "/aanmelden", "/contact"].includes(item.href)
+);
+
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-ink-100 bg-white/95 backdrop-blur">
-      <div className="container-page flex h-20 items-center justify-between">
-        <Logo />
+      <div className="container-page flex h-20 items-center justify-between gap-4">
+        <Logo singleLine />
 
         <nav
-          className="hidden items-center gap-6 lg:flex"
+          className="hidden items-center gap-5 xl:flex"
           aria-label="Hoofdnavigatie"
         >
-          {MAIN_NAV.filter((item) => item.href !== "/aanmelden").map(
-            (item) => {
-              const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-forest-800 ${
-                    active ? "text-forest-800" : "text-ink-700"
-                  }`}
-                  aria-current={active ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              );
-            }
-          )}
+          {DESKTOP_NAV.map((item) => {
+            const active = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`whitespace-nowrap text-sm font-medium transition-colors hover:text-forest-800 ${
+                  active ? "text-forest-800" : "text-ink-700"
+                }`}
+                aria-current={active ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <Link
             href="/aanmelden"
-            className="text-sm font-medium text-ink-700 hover:text-forest-800"
+            className="whitespace-nowrap text-sm font-medium text-ink-700 hover:text-forest-800"
           >
-            Aanmelden als professional
+            Word professional
           </Link>
           <Link
             href="/professionals"
-            className="inline-flex items-center justify-center rounded-xl bg-forest-800 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-forest-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-300"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-forest-800 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-forest-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-300"
           >
             Vind een professional
           </Link>
@@ -58,7 +61,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-forest-800 lg:hidden"
+          className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-lg text-forest-800 xl:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Menu sluiten" : "Menu openen"}
@@ -79,7 +82,7 @@ export function Header() {
       {open && (
         <nav
           id="mobile-menu"
-          className="border-t border-ink-100 bg-white lg:hidden"
+          className="border-t border-ink-100 bg-white xl:hidden"
           aria-label="Mobiele navigatie"
         >
           <div className="container-page flex flex-col gap-1 py-4">

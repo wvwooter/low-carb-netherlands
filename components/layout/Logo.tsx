@@ -4,7 +4,13 @@ import Link from "next/link";
 // die verwijst naar Nederland + voeding/wetenschap, zonder cliché
 // (geen avocado, meetlint of weegschaal).
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({
+  className = "",
+  singleLine = false,
+}: {
+  className?: string;
+  singleLine?: boolean;
+}) {
   return (
     <Link
       href="/"
@@ -32,9 +38,13 @@ export function Logo({ className = "" }: { className?: string }) {
         />
         <circle cx="16" cy="18.5" r="1.6" className="fill-amber-400" />
       </svg>
-      <span className="font-serif text-lg font-semibold leading-tight text-forest-900">
+      <span
+        className={`font-serif text-lg font-semibold leading-tight text-forest-900 ${
+          singleLine ? "whitespace-nowrap" : ""
+        }`}
+      >
         Low Carb
-        <br className="hidden sm:block" /> Netherlands
+        <br className={singleLine ? "hidden" : "hidden sm:block"} /> Netherlands
       </span>
     </Link>
   );
