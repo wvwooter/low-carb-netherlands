@@ -125,6 +125,7 @@ export interface EventItem {
   slug: string;
   titel: string;
   datum: string;
+  einddatum?: string;
   begintijd: string;
   eindtijd: string;
   locatie: string;

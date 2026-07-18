@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import type { EventItem } from "@/lib/types";
+import { formatEventDate } from "@/lib/format-event-date";
 
 const MODALITEIT_LABEL: Record<EventItem["modaliteit"], string> = {
   online: "Online",
@@ -15,11 +16,7 @@ export function EventCard({ event }: { event: EventItem }) {
       <div className="mb-3 flex items-center justify-between">
         <Badge tone="amber">{MODALITEIT_LABEL[event.modaliteit]}</Badge>
         <time dateTime={event.datum} className="text-xs text-ink-500">
-          {new Date(event.datum).toLocaleDateString("nl-NL", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
+          {formatEventDate(event.datum, event.einddatum)}
         </time>
       </div>
       <h3 className="mb-2 font-serif text-lg font-semibold leading-snug text-forest-900">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
+import { formatEventDate } from "@/lib/format-event-date";
 
 interface Props {
   params: { slug: string };
@@ -43,7 +44,10 @@ export default function EventDetailPage({ params }: Props) {
           <div>
             <dt className="text-xs uppercase tracking-wide text-ink-500">Datum</dt>
             <dd className="text-ink-800">
-              {new Date(event.datum).toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" })}, {event.begintijd}–{event.eindtijd}
+              {formatEventDate(event.datum, event.einddatum)}
+              {event.begintijd && event.eindtijd
+                ? `, ${event.begintijd}–${event.eindtijd}`
+                : ""}
             </dd>
           </div>
           <div>
