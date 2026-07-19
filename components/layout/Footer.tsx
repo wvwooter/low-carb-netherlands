@@ -36,6 +36,14 @@ export function Footer() {
                 Wetenschappelijke bronnen
               </Link>
             </li>
+            <li>
+              <Link
+                href="/doneer"
+                className="text-sm font-medium text-amber-600 hover:text-amber-700"
+              >
+                Doneer
+              </Link>
+            </li>
           </ul>
         </div>
 
