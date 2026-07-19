@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { ProfessionalMap } from "@/components/professionals/ProfessionalMap";
+import { RevealContact } from "@/components/professionals/RevealContact";
 import { getVisibleProfessionalBySlug } from "@/lib/professionals";
 import { normalizeWebsiteUrl } from "@/lib/format-website";
 import { PROFESSION_LABELS } from "@/lib/types";
@@ -125,15 +126,19 @@ export default async function ProfessionalDetailPage({ params }: Props) {
             <div>
               <dt className="text-xs uppercase tracking-wide text-ink-500">E-mail</dt>
               <dd>
-                <a href={`mailto:${professional.email}`} className="text-forest-800 hover:underline">
-                  {professional.email}
-                </a>
+                <RevealContact type="email" value={professional.email} label="Toon e-mailadres" />
               </dd>
             </div>
             {professional.telefoonnummer && (
               <div>
                 <dt className="text-xs uppercase tracking-wide text-ink-500">Telefoon</dt>
-                <dd className="text-ink-800">{professional.telefoonnummer}</dd>
+                <dd>
+                  <RevealContact
+                    type="tel"
+                    value={professional.telefoonnummer}
+                    label="Toon telefoonnummer"
+                  />
+                </dd>
               </div>
             )}
           </dl>
