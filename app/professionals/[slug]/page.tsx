@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
 import { PROFESSION_LABELS } from "@/lib/types";
+import { canonical, professionalJsonLd, jsonLdScript } from "@/lib/seo";
 
 interface Props {
   params: { slug: string };
@@ -22,6 +23,7 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: professional.naam,
     description: professional.bio,
+    ...canonical(`/professionals/${professional.slug}`),
   };
 }
 
@@ -35,6 +37,23 @@ export default function ProfessionalDetailPage({ params }: Props) {
 
   return (
     <section className="section">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            professionalJsonLd({
+              slug: professional.slug,
+              naam: professional.naam,
+              beroep: PROFESSION_LABELS[professional.beroep],
+              bio: professional.bio,
+              organisatie: professional.organisatie,
+              provincie: professional.provincie,
+              profielfoto_url: professional.profielfoto_url,
+              website: professional.website,
+            })
+          ),
+        }}
+      />
       <div className="container-page max-w-3xl">
         <Link
           href="/professionals"

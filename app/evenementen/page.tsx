@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { EventCard } from "@/components/events/EventCard";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Evenementen",
   description:
     "Congressen, lezingen, webinars en nascholing over low-carb en metabole gezondheid.",
+  ...canonical("/evenementen"),
 };
 
 export default function EvenementenPage() {

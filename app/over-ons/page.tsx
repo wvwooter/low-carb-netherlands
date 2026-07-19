@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Over ons",
   description:
     "Waarom Low Carb Netherlands is opgericht en waar het platform voor staat.",
+  ...canonical("/over-ons"),
 };
 
 const PIJLERS = [

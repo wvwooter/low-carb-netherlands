@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/types";
+import { canonical, articleJsonLd, jsonLdScript } from "@/lib/seo";
 
 interface Props {
   params: { slug: string };
@@ -20,6 +21,7 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: article.seo_titel,
     description: article.seo_beschrijving,
+    ...canonical(`/artikelen/${article.slug}`),
   };
 }
 
@@ -33,6 +35,21 @@ export default function ArticleDetailPage({ params }: Props) {
 
   return (
     <article className="section">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            articleJsonLd({
+              slug: article.slug,
+              titel: article.titel,
+              beschrijving: article.samenvatting,
+              publicatiedatum: article.publicatiedatum,
+              auteur: article.auteur,
+              afbeelding_url: article.hoofdfoto_url,
+            })
+          ),
+        }}
+      />
       <div className="container-page max-w-3xl">
         <Link href="/artikelen" className="mb-8 inline-block text-sm text-forest-800 hover:underline">
           ← Alle artikelen

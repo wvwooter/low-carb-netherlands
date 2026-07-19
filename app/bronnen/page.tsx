@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Wetenschappelijke bronnen",
   description:
     "Een selectie van wetenschappelijke literatuur over koolhydraatbeperking, voor professionals en geïnteresseerden.",
+  ...canonical("/bronnen"),
 };
 
 interface Bron {

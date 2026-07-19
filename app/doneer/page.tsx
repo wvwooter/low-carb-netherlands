@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Card } from "@/components/ui/Card";
 import { CopyAddressButton } from "./CopyAddressButton";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Doneer",
   description:
     "Steun Low Carb Netherlands met een donatie in bitcoin. Elke bijdrage helpt ons om betrouwbare, koolhydraatarme voorlichting gratis toegankelijk te houden.",
+  ...canonical("/doneer"),
 };
 
 const BTC_ADDRESS = "bc1q79vg0fdusfdntkjee2jgnfcq80v28vueq2dfug";

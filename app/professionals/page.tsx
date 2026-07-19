@@ -5,11 +5,13 @@ import { ProfessionalFilters } from "@/components/professionals/ProfessionalFilt
 import { LinkButton } from "@/components/ui/Button";
 import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
 import type { ProfessionCategory } from "@/lib/types";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Professionals",
   description:
     "Vind artsen, diëtisten, fysiotherapeuten en andere professionals met ervaring in low-carb en metabole gezondheid.",
+  ...canonical("/professionals"),
 };
 
 interface Props {

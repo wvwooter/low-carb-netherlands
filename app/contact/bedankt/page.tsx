@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { LinkButton } from "@/components/ui/Button";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Bedankt voor je bericht",
   robots: { index: false, follow: true },
+  ...canonical("/contact/bedankt"),
 };
 
 export default function ContactBedanktPage() {

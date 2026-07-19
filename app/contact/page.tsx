@@ -3,10 +3,12 @@ import { Card } from "@/components/ui/Card";
 import { SelectField, TextField, TextareaField } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
 import { submitContactForm } from "./actions";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact",
   description: "Neem contact op met Low Carb Netherlands.",
+  ...canonical("/contact"),
 };
 
 export default function ContactPage() {

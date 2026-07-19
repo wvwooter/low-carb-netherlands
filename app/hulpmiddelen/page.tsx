@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Hulpmiddelen",
   description:
     "Hulpmiddelen om glucose en ketonen te meten: continue glucosemonitoring, teststrips, meters en lancetten.",
+  ...canonical("/hulpmiddelen"),
 };
 
 interface Hulpmiddel {

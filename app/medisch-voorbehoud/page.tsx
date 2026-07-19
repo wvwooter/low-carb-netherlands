@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal/LegalPage";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Medisch voorbehoud",
+  ...canonical("/medisch-voorbehoud"),
 };
 
 export default function MedischVoorbehoudPage() {

@@ -3,11 +3,13 @@ import Link from "next/link";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { ARTICLE_CATEGORY_LABELS, type ArticleCategory } from "@/lib/types";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Artikelen",
   description:
     "Artikelen over low-carb, insulineresistentie, diabetes type 2, obesitas en metabole gezondheid.",
+  ...canonical("/artikelen"),
 };
 
 interface Props {

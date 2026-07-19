@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal/LegalPage";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Disclaimer",
+  ...canonical("/disclaimer"),
 };
 
 export default function DisclaimerPage() {

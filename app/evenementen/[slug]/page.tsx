@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
 import { formatEventDate } from "@/lib/format-event-date";
+import { canonical, eventJsonLd, jsonLdScript } from "@/lib/seo";
 
 interface Props {
   params: { slug: string };
@@ -17,7 +18,11 @@ function getEvent(slug: string) {
 export function generateMetadata({ params }: Props): Metadata {
   const event = getEvent(params.slug);
   if (!event) return { title: "Evenement niet gevonden" };
-  return { title: event.titel, description: event.beschrijving };
+  return {
+    title: event.titel,
+    description: event.beschrijving,
+    ...canonical(`/evenementen/${event.slug}`),
+  };
 }
 
 export function generateStaticParams() {
@@ -30,6 +35,23 @@ export default function EventDetailPage({ params }: Props) {
 
   return (
     <section className="section">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            eventJsonLd({
+              slug: event.slug,
+              titel: event.titel,
+              beschrijving: event.beschrijving,
+              datum: event.datum,
+              einddatum: event.einddatum,
+              locatie: event.locatie,
+              inschrijflink: event.inschrijflink,
+              afbeelding_url: event.afbeelding_url,
+            })
+          ),
+        }}
+      />
       <div className="container-page max-w-3xl">
         <Link href="/evenementen" className="mb-8 inline-block text-sm text-forest-800 hover:underline">
           ← Alle evenementen

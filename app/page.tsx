@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { LinkButton } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ProfessionalCard } from "@/components/professionals/ProfessionalCard";
@@ -9,6 +10,13 @@ import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
 import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/constants";
+import { canonical, organizationJsonLd, websiteJsonLd, jsonLdScript } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Low Carb Netherlands — Het Nederlandse platform voor low-carb en metabole gezondheid",
+  description: SITE_DESCRIPTION,
+  ...canonical("/"),
+};
 
 const AUDIENCES = [
   {
@@ -86,6 +94,14 @@ const toneClasses = {
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(websiteJsonLd()) }}
+      />
       <section className="relative overflow-hidden section bg-gradient-to-b from-forest-50 to-white">
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-100/70 blur-2xl" />
         <div className="pointer-events-none absolute -left-16 bottom-0 h-56 w-56 rounded-full bg-forest-100/70 blur-2xl" />

@@ -10,11 +10,13 @@ import { Button } from "@/components/ui/Button";
 import { PROVINCES } from "@/lib/constants";
 import { PROFESSION_LABELS } from "@/lib/types";
 import { submitProfessionalApplication } from "./actions";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Aanmelden als professional",
   description:
     "Meld je aan voor de verwijsgids van Low Carb Netherlands. Profielen worden beoordeeld voordat ze zichtbaar worden.",
+  ...canonical("/aanmelden"),
 };
 
 export default function AanmeldenPage() {

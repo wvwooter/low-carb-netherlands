@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getYoutubeEmbedUrl } from "@/lib/youtube";
+import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Video's",
   description: "Video's en lezingen over low-carb en metabole gezondheid.",
+  ...canonical("/videos"),
 };
 
 type Video = {
