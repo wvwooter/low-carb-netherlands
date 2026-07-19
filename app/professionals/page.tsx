@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ProfessionalCard } from "@/components/professionals/ProfessionalCard";
 import { ProfessionalFilters } from "@/components/professionals/ProfessionalFilters";
+import { ProfessionalsMap } from "@/components/professionals/ProfessionalsMap";
 import { LinkButton } from "@/components/ui/Button";
 import { getVisibleProfessionals } from "@/lib/professionals";
 import type { ProfessionCategory } from "@/lib/types";
@@ -96,11 +97,33 @@ export default async function ProfessionalsPage({ searchParams }: Props) {
           {filtered.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((p) => (
-                <ProfessionalCard key={p.id} professional={p} />
-              ))}
-            </div>
+            <>
+              {(() => {
+                const pins = filtered
+                  .filter(
+                    (p): p is typeof p & { latitude: number; longitude: number } =>
+                      p.latitude !== null && p.longitude !== null
+                  )
+                  .map((p) => ({
+                    slug: p.slug,
+                    naam: p.naam,
+                    locatie: p.locatie,
+                    provincie: p.provincie,
+                    latitude: p.latitude,
+                    longitude: p.longitude,
+                  }));
+                return pins.length > 0 ? (
+                  <div className="mb-10">
+                    <ProfessionalsMap pins={pins} />
+                  </div>
+                ) : null;
+              })()}
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((p) => (
+                  <ProfessionalCard key={p.id} professional={p} />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>

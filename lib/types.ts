@@ -52,6 +52,8 @@ export interface Professional {
   goedkeuringsstatus: ApprovalStatus;
   zichtbaar: boolean;
   aangemeld_op: string;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export interface ProfessionalApplication {

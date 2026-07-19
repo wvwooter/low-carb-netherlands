@@ -46,6 +46,12 @@ export function Header() {
 
         <div className="hidden items-center gap-3 xl:flex">
           <Link
+            href="/doneer"
+            className="whitespace-nowrap text-sm font-medium text-amber-600 hover:text-amber-700"
+          >
+            Doneer
+          </Link>
+          <Link
             href="/aanmelden"
             className="whitespace-nowrap text-sm font-medium text-ink-700 hover:text-forest-800"
           >
@@ -96,6 +102,13 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/doneer"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-base font-medium text-amber-600 hover:bg-amber-50"
+            >
+              Doneer
+            </Link>
             <Link
               href="/professionals"
               onClick={() => setOpen(false)}

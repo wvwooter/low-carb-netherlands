@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { geocodeAddress } from "@/lib/geocode";
 
 function slugify(input: string) {
   return input
@@ -41,6 +42,17 @@ export async function approveApplication(applicationId: string) {
     slug = `${baseSlug}-${attempt + 1}`;
   }
 
+  const geocodeQuery = [
+    application.adres,
+    application.postcode,
+    application.plaats,
+    application.provincie,
+    "Nederland",
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const coords = await geocodeAddress(geocodeQuery);
+
   const { error: insertError } = await supabase.from("professionals").insert({
     slug,
     naam: `${application.voornaam} ${application.achternaam}`,
@@ -58,6 +70,8 @@ export async function approveApplication(applicationId: string) {
     bio: application.motivatie || application.behandelgebieden || null,
     goedkeuringsstatus: "approved",
     zichtbaar: true,
+    latitude: coords?.latitude ?? null,
+    longitude: coords?.longitude ?? null,
   });
 
   if (insertError) {

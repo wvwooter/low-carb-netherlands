@@ -28,6 +28,8 @@ export const MOCK_PROFESSIONALS: Professional[] = [
     goedkeuringsstatus: "approved",
     zichtbaar: true,
     aangemeld_op: "2026-02-10",
+    latitude: null,
+    longitude: null,
   },
   {
     id: "demo-2",
@@ -53,6 +55,8 @@ export const MOCK_PROFESSIONALS: Professional[] = [
     goedkeuringsstatus: "approved",
     zichtbaar: true,
     aangemeld_op: "2026-03-02",
+    latitude: null,
+    longitude: null,
   },
   {
     id: "demo-3",
@@ -78,5 +82,7 @@ export const MOCK_PROFESSIONALS: Professional[] = [
     goedkeuringsstatus: "approved",
     zichtbaar: true,
     aangemeld_op: "2026-01-20",
+    latitude: null,
+    longitude: null,
   },
 ];

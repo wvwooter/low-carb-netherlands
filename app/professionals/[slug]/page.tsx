@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { ProfessionalMap } from "@/components/professionals/ProfessionalMap";
 import { getVisibleProfessionalBySlug } from "@/lib/professionals";
 import { PROFESSION_LABELS } from "@/lib/types";
 import { canonical, professionalJsonLd, jsonLdScript } from "@/lib/seo";
@@ -131,6 +132,18 @@ export default async function ProfessionalDetailPage({ params }: Props) {
             )}
           </dl>
         </Card>
+
+        {professional.latitude !== null && professional.longitude !== null && (
+          <div className="mb-6">
+            <ProfessionalMap
+              latitude={professional.latitude}
+              longitude={professional.longitude}
+              naam={professional.naam}
+              locatie={professional.locatie}
+              provincie={professional.provincie}
+            />
+          </div>
+        )}
 
         <p className="text-sm text-ink-500">
           Dit profiel is door de redactie beoordeeld en goedgekeurd. Neem
