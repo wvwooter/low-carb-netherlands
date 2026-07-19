@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { ProfessionalCard } from "@/components/professionals/ProfessionalCard";
 import { ProfessionalFilters } from "@/components/professionals/ProfessionalFilters";
 import { LinkButton } from "@/components/ui/Button";
-import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
+import { getVisibleProfessionals } from "@/lib/professionals";
 import type { ProfessionCategory } from "@/lib/types";
 import { canonical } from "@/lib/seo";
 
@@ -13,6 +13,8 @@ export const metadata: Metadata = {
     "Vind artsen, diëtisten, fysiotherapeuten en andere professionals met ervaring in low-carb en metabole gezondheid.",
   ...canonical("/professionals"),
 };
+
+export const dynamic = "force-dynamic";
 
 interface Props {
   searchParams: {
@@ -42,8 +44,10 @@ function EmptyState() {
   );
 }
 
-export default function ProfessionalsPage({ searchParams }: Props) {
-  const filtered = MOCK_PROFESSIONALS.filter((p) => {
+export default async function ProfessionalsPage({ searchParams }: Props) {
+  const professionals = await getVisibleProfessionals();
+
+  const filtered = professionals.filter((p) => {
     if (!p.zichtbaar || p.goedkeuringsstatus !== "approved") return false;
     if (
       searchParams.beroep &&

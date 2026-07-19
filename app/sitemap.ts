@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
-import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
+import { getVisibleProfessionals } from "@/lib/professionals";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
     "/over-ons",
@@ -28,9 +28,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 
-  const professionalRoutes = MOCK_PROFESSIONALS.filter(
-    (p) => p.zichtbaar && p.goedkeuringsstatus === "approved"
-  ).map((p) => ({
+  const visibleProfessionals = await getVisibleProfessionals();
+  const professionalRoutes = visibleProfessionals.map((p) => ({
     url: `${SITE_URL}/professionals/${p.slug}`,
     lastModified: new Date(),
   }));

@@ -3,22 +3,18 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
-import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
+import { getVisibleProfessionalBySlug } from "@/lib/professionals";
 import { PROFESSION_LABELS } from "@/lib/types";
 import { canonical, professionalJsonLd, jsonLdScript } from "@/lib/seo";
+
+export const dynamic = "force-dynamic";
 
 interface Props {
   params: { slug: string };
 }
 
-function getProfessional(slug: string) {
-  return MOCK_PROFESSIONALS.find(
-    (p) => p.slug === slug && p.zichtbaar && p.goedkeuringsstatus === "approved"
-  );
-}
-
-export function generateMetadata({ params }: Props): Metadata {
-  const professional = getProfessional(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const professional = await getVisibleProfessionalBySlug(params.slug);
   if (!professional) return { title: "Professional niet gevonden" };
   return {
     title: professional.naam,
@@ -27,12 +23,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_PROFESSIONALS.map((p) => ({ slug: p.slug }));
-}
-
-export default function ProfessionalDetailPage({ params }: Props) {
-  const professional = getProfessional(params.slug);
+export default async function ProfessionalDetailPage({ params }: Props) {
+  const professional = await getVisibleProfessionalBySlug(params.slug);
   if (!professional) notFound();
 
   return (
