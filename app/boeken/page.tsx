@@ -82,6 +82,46 @@ const CATEGORIEEN: Categorie[] = [
           "Cardioloog William Davis over de effecten van moderne tarweconsumptie op gewicht en gezondheid.",
         bolUrl: "https://www.bol.com/nl/nl/p/wheat-belly-wheat-belly/9200000033052347/",
       },
+      {
+        auteurs: "Gary Taubes",
+        titel: "Why We Get Fat",
+        jaar: "2010",
+        beschrijving:
+          "Toegankelijker vervolg op Good Calories, Bad Calories over waarom we dik worden en wat daaraan te doen is.",
+        bolUrl: "https://www.bol.com/nl/nl/p/why-we-get-fat/1001004010611701/",
+      },
+      {
+        auteurs: "Gary Taubes",
+        titel: "The Case for Keto",
+        jaar: "2020",
+        beschrijving:
+          "Gebaseerd op twintig jaar onderzoeksjournalistiek en gesprekken met artsen over ketogene voeding als aanpak voor gewichtsbeheersing.",
+        bolUrl: "https://www.bol.com/nl/nl/p/the-case-for-keto/9200000120465435/",
+      },
+      {
+        auteurs: "Robert Lustig",
+        titel: "Metabolical",
+        jaar: "2021",
+        beschrijving:
+          "Kinderarts en onderzoeker Robert Lustig over hoe bewerkt voedsel bijdraagt aan chronische ziekte.",
+        bolUrl: "https://www.bol.com/nl/nl/f/metabolical/9300000007752342/",
+      },
+      {
+        auteurs: "James DiNicolantonio",
+        titel: "The Salt Fix",
+        jaar: "2017",
+        beschrijving:
+          "Cardiovasculair onderzoeker James DiNicolantonio over hoe zout ten onrechte als gezondheidsrisico werd aangewezen.",
+        bolUrl: "https://www.bol.com/nl/nl/p/the-salt-fix/9200000058993534/",
+      },
+      {
+        auteurs: "James DiNicolantonio en Jason Fung",
+        titel: "The Longevity Solution",
+        jaar: "2019",
+        beschrijving:
+          "Vijf stappen voor een langer, gezonder leven, gebaseerd op de leefstijl van de langstlevende bevolkingsgroepen ter wereld.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-longevity-solution/9200000103401949/",
+      },
     ],
   },
   {
@@ -140,6 +180,62 @@ const CATEGORIEEN: Categorie[] = [
           "Herziene, wetenschappelijk onderbouwde versie van de Atkins-aanpak voor dagelijks gebruik.",
         bolUrl: "https://www.bol.com/nl/nl/f/the-new-atkins-for-a-new-you/9200000013653374/",
       },
+      {
+        auteurs: "Jason Fung",
+        titel: "The Cancer Code",
+        jaar: "2020",
+        beschrijving:
+          "Jason Fung over de rol van insulineontregeling bij het ontstaan en de behandeling van kanker.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-cancer-code/9200000130196715/",
+      },
+      {
+        auteurs: "Peter Brukner",
+        titel: "A Fat Lot of Good",
+        jaar: "2018",
+        beschrijving:
+          "Australische sportarts Peter Brukner over hoe voedingsadviezen decennialang misgingen en hoe je zelf de regie neemt.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("A Fat Lot of Good Peter Brukner"),
+      },
+      {
+        auteurs: "Peter Brukner",
+        titel: "The Diabetes Plan",
+        jaar: "2023",
+        beschrijving:
+          "Praktische gids met menuplannen en recepten om diabetes type 2 via koolhydraatbeperking te voorkomen of terug te dringen.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("The Diabetes Plan Peter Brukner"),
+      },
+      {
+        auteurs: "Richard K. Bernstein",
+        titel: "Dr. Bernstein's Diabetes Solution",
+        jaar: "1997 (vierde editie bijgewerkt)",
+        beschrijving:
+          "Klassieker over het normaliseren van bloedsuikers bij diabetes type 1 en 2 via strikte koolhydraatbeperking.",
+        bolUrl: "https://www.bol.com/nl/nl/p/dr-bernstein-s-diabetes-solution/9200000018035494/",
+      },
+      {
+        auteurs: "Trudi Deakin / X-PERT Health",
+        titel: "X-PERT Diabetes Prevention and Management",
+        jaar: "doorlopend bijgewerkt",
+        beschrijving:
+          "Handboek van het Britse scholingsprogramma X-PERT Health voor zelfmanagement bij prediabetes en diabetes type 2.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("X-PERT Diabetes Prevention and Management Trudi Deakin"),
+      },
+      {
+        auteurs: "Sarah Hallberg en Nina Teicholz",
+        titel: "Status Quo Thinking Is Harming Your Health",
+        jaar: "2024",
+        beschrijving:
+          "Postuum verschenen slotpleidooi van arts Sarah Hallberg tegen vastgeroeste aannames in de reguliere gezondheidszorg.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("Status Quo Thinking Is Harming Your Health Sarah Hallberg"),
+      },
     ],
   },
   {
@@ -179,6 +275,34 @@ const CATEGORIEEN: Categorie[] = [
         beschrijving:
           "Bekende, herkenbare gerechten opnieuw bedacht als koolhydraatarme, ketogene versies.",
         bolUrl: "https://www.bol.com/nl/nl/f/keto-comfort-foods/9200000074057721/",
+      },
+      {
+        auteurs: "Tim Noakes e.a.",
+        titel: "The Real Meal Revolution 2.0",
+        jaar: "2017",
+        beschrijving:
+          "Bijgewerkte editie van de bekende Zuid-Afrikaanse LCHF-bestseller, met een viertrapsaanpak en praktische voedingslijsten.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-real-meal-revolution-2-0/9200000073222103/",
+      },
+      {
+        auteurs: "Grant Schofield, Caryn Zinn en Craig Rodger",
+        titel: "What the Fast!",
+        jaar: "2018",
+        beschrijving:
+          "Praktische gids voor het combineren van vasten met koolhydraatarme, vetrijke voeding.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("What the Fast Grant Schofield Caryn Zinn"),
+      },
+      {
+        auteurs: "Grant Schofield, Caryn Zinn en Craig Rodger",
+        titel: "What the Fat? Recipes",
+        jaar: "2019",
+        beschrijving:
+          "Receptenboek met koolhydraatarme, vetrijke gerechten voor het dagelijks gebruik.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("What the Fat Recipes Caryn Zinn"),
       },
     ],
   },
