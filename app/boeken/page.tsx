@@ -184,6 +184,15 @@ const CATEGORIEEN: Categorie[] = [
   },
 ];
 
+const AUTEURSBOEK: Boek = {
+  auteurs: "Wouter van Wijhe",
+  titel: "De sterkste pijnstiller",
+  jaar: "2025",
+  beschrijving:
+    "Als orthopedisch chirurg zag Wouter van Wijhe dagelijks hoe overgewicht leidt tot pijn, artrose en hogere operatierisico's. Op basis van insulineresistentie en de rol van insuline bij vetopslag ontwikkelde hij een aanpak waarmee patienten niet alleen blijvend afvielen, maar vaak ook binnen weken minder gewrichtspijn hadden.",
+  bolUrl: "https://www.bol.com/nl/nl/p/de-sterkste-pijnstiller/9300000257233931/",
+};
+
 export default function BoekenPage() {
   return (
     <>
@@ -198,6 +207,33 @@ export default function BoekenPage() {
             praktische gidsen en kookboeken. Deze lijst is niet uitputtend en
             wordt regelmatig aangevuld.
           </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container-page max-w-3xl">
+          <h2 className="font-serif text-2xl font-semibold text-forest-900">
+            Van de auteur
+          </h2>
+          <Card className="mt-6 border-forest-200 bg-forest-50/60">
+            <p className="text-sm leading-relaxed text-ink-700">
+              <span className="font-medium text-forest-900">
+                {AUTEURSBOEK.auteurs} — {AUTEURSBOEK.titel}
+              </span>{" "}
+              <span className="italic">({AUTEURSBOEK.jaar})</span>.{" "}
+              {AUTEURSBOEK.beschrijving}
+            </p>
+            <div className="mt-2">
+              <a
+                href={affiliateLink(AUTEURSBOEK.bolUrl, `${AUTEURSBOEK.titel}, ${AUTEURSBOEK.auteurs}`)}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="text-xs font-medium text-forest-800 underline hover:text-forest-700"
+              >
+                Bekijk op bol.com →
+              </a>
+            </div>
+          </Card>
         </div>
       </section>
 
