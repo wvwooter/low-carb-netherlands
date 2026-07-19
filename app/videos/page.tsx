@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/Card";
+import { LiteYoutubeEmbed } from "@/components/videos/LiteYoutubeEmbed";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { getYoutubeEmbedUrl } from "@/lib/youtube";
+import { getYoutubeId, getYoutubeThumbnail } from "@/lib/youtube";
 import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -35,17 +36,16 @@ function VideoGrid({ videos }: { videos: Video[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-2">
       {videos.map((video) => {
-        const embedUrl = getYoutubeEmbedUrl(video.youtube_url);
+        const videoId = getYoutubeId(video.youtube_url);
+        const thumbnailUrl = getYoutubeThumbnail(video.youtube_url);
         return (
           <Card key={video.id} className="overflow-hidden p-0">
-            {embedUrl && (
+            {videoId && thumbnailUrl && (
               <div className="aspect-video w-full">
-                <iframe
-                  src={embedUrl}
+                <LiteYoutubeEmbed
+                  videoId={videoId}
                   title={video.titel}
-                  className="h-full w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+                  thumbnailUrl={thumbnailUrl}
                 />
               </div>
             )}
