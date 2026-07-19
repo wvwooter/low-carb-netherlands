@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { ProfessionalMap } from "@/components/professionals/ProfessionalMap";
 import { getVisibleProfessionalBySlug } from "@/lib/professionals";
+import { normalizeWebsiteUrl } from "@/lib/format-website";
 import { PROFESSION_LABELS } from "@/lib/types";
 import { canonical, professionalJsonLd, jsonLdScript } from "@/lib/seo";
 
@@ -106,11 +107,16 @@ export default async function ProfessionalDetailPage({ params }: Props) {
                 <dd className="text-ink-800">{professional.big_registratie}</dd>
               </div>
             )}
-            {professional.website && (
+            {professional.website && normalizeWebsiteUrl(professional.website) && (
               <div>
                 <dt className="text-xs uppercase tracking-wide text-ink-500">Website</dt>
                 <dd>
-                  <a href={professional.website} className="text-forest-800 hover:underline">
+                  <a
+                    href={normalizeWebsiteUrl(professional.website)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-forest-800 hover:underline"
+                  >
                     {professional.website}
                   </a>
                 </dd>

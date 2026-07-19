@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createSupabaseServiceRoleClient } from "@/lib/supabase/server";
+import { normalizeWebsiteUrl } from "@/lib/format-website";
 import {
   sendAdminApplicationNotification,
   sendApplicationConfirmationEmail,
@@ -35,11 +36,11 @@ export async function submitProfessionalApplication(formData: FormData) {
 
   // Website is een gewoon tekstveld (niet type="url"): browsers blokkeerden
   // anders stil de hele formulier-submit als iemand een adres zonder
-  // "https://" invulde. Hier vullen we het schema aan indien nodig.
+  // "https://" invulde. normalizeWebsiteUrl vult het schema aan en herstelt
+  // ook veelvoorkomende tikfouten in het schema zelf (bv. "htttp:"), zodat
+  // we nooit een kapotte link opslaan.
   const websiteRuw = String(formData.get("website") ?? "").trim();
-  const website = websiteRuw && !/^https?:\/\//i.test(websiteRuw)
-    ? `https://${websiteRuw}`
-    : websiteRuw;
+  const website = websiteRuw ? normalizeWebsiteUrl(websiteRuw) ?? "" : "";
 
   if (!email || !voornaam || !achternaam || !beroep) {
     throw new Error("Verplichte velden ontbreken.");
