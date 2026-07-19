@@ -3,20 +3,19 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
-import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
+import { ArticleContent } from "@/components/articles/ArticleContent";
+import { getPublishedArticleBySlug } from "@/lib/articles";
 import { ARTICLE_CATEGORY_LABELS } from "@/lib/types";
 import { canonical, articleJsonLd, jsonLdScript } from "@/lib/seo";
+
+export const dynamic = "force-dynamic";
 
 interface Props {
   params: { slug: string };
 }
 
-function getArticle(slug: string) {
-  return MOCK_ARTICLES.find((a) => a.slug === slug);
-}
-
-export function generateMetadata({ params }: Props): Metadata {
-  const article = getArticle(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const article = await getPublishedArticleBySlug(params.slug);
   if (!article) return { title: "Artikel niet gevonden" };
   return {
     title: article.seo_titel,
@@ -25,12 +24,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export function generateStaticParams() {
-  return MOCK_ARTICLES.map((a) => ({ slug: a.slug }));
-}
-
-export default function ArticleDetailPage({ params }: Props) {
-  const article = getArticle(params.slug);
+export default async function ArticleDetailPage({ params }: Props) {
+  const article = await getPublishedArticleBySlug(params.slug);
   if (!article) notFound();
 
   return (
@@ -69,9 +64,7 @@ export default function ArticleDetailPage({ params }: Props) {
           <span>{article.leestijd_minuten} min leestijd</span>
         </div>
 
-        <div className="prose prose-forest mt-8 max-w-none leading-relaxed text-ink-800">
-          <p>{article.inhoud}</p>
-        </div>
+        <ArticleContent inhoud={article.inhoud} />
 
         {article.referenties.length > 0 && (
           <div className="mt-10">

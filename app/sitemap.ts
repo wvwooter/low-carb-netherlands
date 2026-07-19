@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
-import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
 import { getVisibleProfessionals } from "@/lib/professionals";
+import { getPublishedArticles } from "@/lib/articles";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
@@ -35,7 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
-  const articleRoutes = MOCK_ARTICLES.map((a) => ({
+  const publishedArticles = await getPublishedArticles();
+  const articleRoutes = publishedArticles.map((a) => ({
     url: `${SITE_URL}/artikelen/${a.slug}`,
     lastModified: new Date(a.publicatiedatum),
   }));

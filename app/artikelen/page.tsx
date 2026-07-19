@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArticleCard } from "@/components/articles/ArticleCard";
-import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
+import { getPublishedArticles } from "@/lib/articles";
 import { ARTICLE_CATEGORY_LABELS, type ArticleCategory } from "@/lib/types";
 import { canonical } from "@/lib/seo";
 
@@ -12,15 +12,18 @@ export const metadata: Metadata = {
   ...canonical("/artikelen"),
 };
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   searchParams: { categorie?: string };
 }
 
-export default function ArtikelenPage({ searchParams }: Props) {
+export default async function ArtikelenPage({ searchParams }: Props) {
   const active = searchParams.categorie as ArticleCategory | undefined;
+  const articles = await getPublishedArticles();
   const filtered = active
-    ? MOCK_ARTICLES.filter((a) => a.categorie === active)
-    : MOCK_ARTICLES;
+    ? articles.filter((a) => a.categorie === active)
+    : articles;
 
   return (
     <section className="section">
@@ -31,9 +34,7 @@ export default function ArtikelenPage({ searchParams }: Props) {
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-ink-700">
             Wetenschappelijk onderbouwde artikelen over koolhydraatbeperking,
-            insulineresistentie en metabole gezondheid. Onderstaande
-            artikelen zijn voorbeeldcontent ter illustratie van de
-            structuur.
+            insulineresistentie en metabole gezondheid.
           </p>
           <p className="mt-3 text-sm text-ink-500">
             Op zoek naar de wetenschappelijke literatuur zelf? Bekijk onze{" "}
@@ -66,11 +67,17 @@ export default function ArtikelenPage({ searchParams }: Props) {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((a) => (
-            <ArticleCard key={a.slug} article={a} />
-          ))}
-        </div>
+        {filtered.length === 0 ? (
+          <p className="mt-10 text-ink-600">
+            Er zijn nog geen artikelen in deze categorie.
+          </p>
+        ) : (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((a) => (
+              <ArticleCard key={a.slug} article={a} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

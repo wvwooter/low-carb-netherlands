@@ -7,8 +7,8 @@ import { EventCard } from "@/components/events/EventCard";
 import { HeroGraphic } from "@/components/home/HeroGraphic";
 import { FaqAccordion } from "@/components/home/FaqAccordion";
 import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
-import { MOCK_ARTICLES } from "@/lib/mock-data/articles";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
+import { getPublishedArticles } from "@/lib/articles";
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/constants";
 import { canonical, organizationJsonLd, websiteJsonLd, jsonLdScript } from "@/lib/seo";
 
@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   ...canonical("/"),
 };
+
+export const dynamic = "force-dynamic";
 
 const AUDIENCES = [
   {
@@ -91,7 +93,8 @@ const toneClasses = {
   forestLight: "bg-forest-100 text-forest-900",
 } as const;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const recentArticles = (await getPublishedArticles()).slice(0, 3);
   return (
     <>
       <script
@@ -276,11 +279,15 @@ export default function HomePage() {
               Alle artikelen →
             </LinkButton>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {MOCK_ARTICLES.map((a) => (
-              <ArticleCard key={a.slug} article={a} />
-            ))}
-          </div>
+          {recentArticles.length === 0 ? (
+            <p className="text-ink-600">Binnenkort verschijnen hier de eerste artikelen.</p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {recentArticles.map((a) => (
+                <ArticleCard key={a.slug} article={a} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
