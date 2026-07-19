@@ -12,6 +12,7 @@ interface Boek {
   titel: string;
   jaar: string;
   beschrijving: string;
+  bolUrl: string;
 }
 
 interface Categorie {
@@ -20,9 +21,19 @@ interface Categorie {
   boeken: Boek[];
 }
 
-function bolLink(titel: string, auteurs: string) {
-  const query = encodeURIComponent(`${titel} ${auteurs}`);
-  return `https://www.bol.com/nl/nl/s/?searchtext=${query}`;
+const BOL_AFFILIATE_ID = "1532849";
+const BOL_AFFILIATE_FLAG = "TXL";
+
+function affiliateLink(bolUrl: string, naam: string) {
+  const params = new URLSearchParams({
+    p: "2",
+    t: "url",
+    s: BOL_AFFILIATE_ID,
+    f: BOL_AFFILIATE_FLAG,
+    url: bolUrl,
+    name: naam,
+  });
+  return `https://partner.bol.com/click/click?${params.toString()}`;
 }
 
 const CATEGORIEEN: Categorie[] = [
@@ -37,6 +48,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2007",
         beschrijving:
           "Uitgebreide, kritische geschiedenis van het wetenschappelijk denken over vet, koolhydraten en gewichtstoename.",
+        bolUrl: "https://www.bol.com/nl/nl/p/good-calories-bad-calories/1001004006295176/",
       },
       {
         auteurs: "Gary Taubes",
@@ -44,6 +56,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2016",
         beschrijving:
           "Onderzoek naar de rol van suiker in de opkomst van obesitas, diabetes type 2 en andere chronische ziekten.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-case-against-sugar/9200000057582553/",
       },
       {
         auteurs: "Nina Teicholz",
@@ -51,6 +64,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2014",
         beschrijving:
           "Onderzoeksjournalistiek over hoe verzadigd vet decennialang ten onrechte als hoofdoorzaak van hartziekten werd aangewezen.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-big-fat-surprise/9200000009948524/",
       },
       {
         auteurs: "Benjamin Bikman",
@@ -58,6 +72,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2020",
         beschrijving:
           "Uitleg door een metabolisme-onderzoeker over insulineresistentie als gemeenschappelijke wortel van veel chronische ziekten.",
+        bolUrl: "https://www.bol.com/nl/nl/p/why-we-get-sick/9300000014866524/",
       },
       {
         auteurs: "William Davis",
@@ -65,6 +80,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2011",
         beschrijving:
           "Cardioloog William Davis over de effecten van moderne tarweconsumptie op gewicht en gezondheid.",
+        bolUrl: "https://www.bol.com/nl/nl/p/wheat-belly-wheat-belly/9200000033052347/",
       },
     ],
   },
@@ -79,6 +95,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2016",
         beschrijving:
           "Nefroloog Jason Fung over de hormonale (in plaats van calorie-gerichte) benadering van overgewicht.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-obesity-code/9200000055686970/",
       },
       {
         auteurs: "Jason Fung",
@@ -86,6 +103,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2018",
         beschrijving:
           "Praktische uitleg over het voorkomen en omkeren van diabetes type 2 via voeding en leefstijl.",
+        bolUrl: "https://www.bol.com/nl/nl/p/the-diabetes-code/9200000081770488/",
       },
       {
         auteurs: "Jason Fung en Jimmy Moore",
@@ -93,6 +111,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2016",
         beschrijving:
           "Praktische gids voor intermitterend, alternate-day en langer vasten, inclusief protocollen en veelgestelde vragen.",
+        bolUrl: "https://www.bol.com/nl/nl/p/complete-guide-to-fasting/9200000067647825/",
       },
       {
         auteurs: "Stephen Phinney en Jeff Volek",
@@ -100,6 +119,8 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2011",
         beschrijving:
           "Naslagwerk van twee vooraanstaande onderzoekers over de klinische toepassing van koolhydraatbeperking.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/p/the-art-and-science-of-low-carbohydrate-living/9200000028909767/",
       },
       {
         auteurs: "Stephen Phinney en Jeff Volek",
@@ -107,6 +128,9 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2012",
         beschrijving:
           "Vervolg gericht op koolhydraatbeperking en sportprestaties, voor sporters en coaches.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("Art and Science of Low Carbohydrate Performance Volek Phinney"),
       },
       {
         auteurs: "Eric Westman, Stephen Phinney en Jeff Volek",
@@ -114,6 +138,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2010",
         beschrijving:
           "Herziene, wetenschappelijk onderbouwde versie van de Atkins-aanpak voor dagelijks gebruik.",
+        bolUrl: "https://www.bol.com/nl/nl/f/the-new-atkins-for-a-new-you/9200000013653374/",
       },
     ],
   },
@@ -127,6 +152,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2017",
         beschrijving:
           "Complete gids met recepten en meerdere 28-dagen-menu's om ketogeen te gaan eten.",
+        bolUrl: "https://www.bol.com/nl/nl/p/the-keto-diet/9300000007176548/",
       },
       {
         auteurs: "Maria Emmerich",
@@ -134,6 +160,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2016",
         beschrijving:
           "Snelle, tijdbesparende ketogene recepten en menuplanning voor de dagelijkse praktijk.",
+        bolUrl: "https://www.bol.com/nl/nl/p/quick-easy-ketogenic-cooking/9200000056338222/",
       },
       {
         auteurs: "Martina Slajerova",
@@ -141,6 +168,9 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2016",
         beschrijving:
           "Meer dan 150 koolhydraatarme, vetrijke recepten, graanvrij en suikervrij.",
+        bolUrl:
+          "https://www.bol.com/nl/nl/s/?searchtext=" +
+          encodeURIComponent("The KetoDiet Cookbook Martina Slajerova"),
       },
       {
         auteurs: "Maria Emmerich",
@@ -148,6 +178,7 @@ const CATEGORIEEN: Categorie[] = [
         jaar: "2018",
         beschrijving:
           "Bekende, herkenbare gerechten opnieuw bedacht als koolhydraatarme, ketogene versies.",
+        bolUrl: "https://www.bol.com/nl/nl/f/keto-comfort-foods/9200000074057721/",
       },
     ],
   },
@@ -178,22 +209,26 @@ export default function BoekenPage() {
             </h2>
             <p className="mt-3 text-ink-700 leading-relaxed">{cat.intro}</p>
             <Card className="mt-6">
-              <ol className="space-y-5">
+              <ol className="space-y-6">
                 {cat.boeken.map((b) => (
                   <li key={b.titel} className="text-sm leading-relaxed">
                     <span className="text-ink-700">
-                      {b.auteurs} —{" "}
-                      <a
-                        href={bolLink(b.titel, b.auteurs)}
-                        target="_blank"
-                        rel="noopener noreferrer nofollow"
-                        className="font-medium text-forest-800 underline hover:text-forest-700"
-                      >
-                        {b.titel}
-                      </a>{" "}
+                      <span className="font-medium text-forest-900">
+                        {b.auteurs} — {b.titel}
+                      </span>{" "}
                       <span className="italic">({b.jaar})</span>.{" "}
                       {b.beschrijving}
                     </span>
+                    <div className="mt-1.5">
+                      <a
+                        href={affiliateLink(b.bolUrl, b.titel)}
+                        target="_blank"
+                        rel="noopener noreferrer sponsored"
+                        className="text-xs font-medium text-forest-800 underline hover:text-forest-700"
+                      >
+                        Bekijk op bol.com →
+                      </a>
+                    </div>
                   </li>
                 ))}
               </ol>
@@ -215,7 +250,9 @@ export default function BoekenPage() {
               <a href="/medisch-voorbehoud" className="underline">
                 pagina medisch voorbehoud
               </a>
-              .
+              . Links naar bol.com zijn affiliate-links: bij een aankoop via
+              deze links ontvangt Low Carb Netherlands mogelijk een kleine
+              vergoeding, zonder meerkosten voor jou.
             </p>
           </Card>
         </div>
