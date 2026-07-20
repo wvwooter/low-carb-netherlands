@@ -10,6 +10,10 @@ export type ProfessionCategory =
   | "verpleegkundig_specialist"
   | "praktijkondersteuner"
   | "leefstijlcoach"
+  | "metabool_therapeut"
+  | "orthomoleculair_therapeut"
+  | "voedingsdeskundige"
+  | "psycholoog"
   | "onderzoeker"
   | "overig";
 
@@ -22,6 +26,10 @@ export const PROFESSION_LABELS: Record<ProfessionCategory, string> = {
   verpleegkundig_specialist: "Verpleegkundig specialist",
   praktijkondersteuner: "Praktijkondersteuner",
   leefstijlcoach: "Leefstijlcoach",
+  metabool_therapeut: "Metabool therapeut",
+  orthomoleculair_therapeut: "Orthomoleculair therapeut",
+  voedingsdeskundige: "Voedingsdeskundige",
+  psycholoog: "Psycholoog",
   onderzoeker: "Onderzoeker",
   overig: "Overige professional",
 };
