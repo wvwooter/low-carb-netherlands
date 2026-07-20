@@ -6,7 +6,7 @@ import { ArticleCard } from "@/components/articles/ArticleCard";
 import { EventCard } from "@/components/events/EventCard";
 import { HeroGraphic } from "@/components/home/HeroGraphic";
 import { FaqAccordion } from "@/components/home/FaqAccordion";
-import { MOCK_PROFESSIONALS } from "@/lib/mock-data/professionals";
+import { getVisibleProfessionals } from "@/lib/professionals";
 import { MOCK_EVENTS } from "@/lib/mock-data/events";
 import { getPublishedArticles } from "@/lib/articles";
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/constants";
@@ -95,6 +95,7 @@ const toneClasses = {
 
 export default async function HomePage() {
   const recentArticles = (await getPublishedArticles()).slice(0, 3);
+  const featuredProfessionals = (await getVisibleProfessionals()).slice(0, 3);
   return (
     <>
       <script
@@ -261,11 +262,15 @@ export default async function HomePage() {
               Alle professionals →
             </LinkButton>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {MOCK_PROFESSIONALS.map((p) => (
-              <ProfessionalCard key={p.id} professional={p} />
-            ))}
-          </div>
+          {featuredProfessionals.length === 0 ? (
+            <p className="text-ink-600">Binnenkort verschijnen hier de eerste professionals.</p>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredProfessionals.map((p) => (
+                <ProfessionalCard key={p.id} professional={p} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -25,16 +25,15 @@ interface Categorie {
 const BOL_AFFILIATE_ID = "1532849";
 const BOL_AFFILIATE_FLAG = "TXL";
 
-function affiliateLink(bolUrl: string, naam: string) {
-  const params = new URLSearchParams({
-    p: "2",
-    t: "url",
-    s: BOL_AFFILIATE_ID,
-    f: BOL_AFFILIATE_FLAG,
-    url: bolUrl,
-    name: naam,
-  });
-  return `https://partner.bol.com/click/click?${params.toString()}`;
+// LET OP (tijdelijk): bol.com's eigen affiliate-redirect (partner.bol.com)
+// geeft momenteel voor alle producten "Access Denied" terug -- een storing
+// aan bol.com's kant, gereproduceerd los van onze site. Tot dat is
+// opgelost linken we rechtstreeks naar de productpagina, zonder de kapotte
+// redirect. Zodra bol.com het weer werkend heeft, kan onderstaande functie
+// teruggezet worden naar de partner.bol.com-variant (zie git-historie, of
+// de gelijke fix in app/boeken/page.tsx).
+function affiliateLink(bolUrl: string, _naam: string) {
+  return bolUrl;
 }
 
 const CATEGORIEEN: Categorie[] = [
