@@ -22,11 +22,21 @@ interface Application {
   aangemaakt_op: string;
 }
 
+const PAGE_SIZE = 20;
+
 export function AanmeldingenList({ applications }: { applications: Application[] }) {
   const [items, setItems] = useState(applications);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+
+  const pageCount = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount - 1);
+  const pageItems = items.slice(
+    currentPage * PAGE_SIZE,
+    currentPage * PAGE_SIZE + PAGE_SIZE
+  );
 
   function handleApprove(id: string) {
     setError(null);
@@ -71,7 +81,12 @@ export function AanmeldingenList({ applications }: { applications: Application[]
           {error}
         </p>
       )}
-      {items.map((item) => (
+      {items.length > PAGE_SIZE && (
+        <p className="text-sm text-ink-500">
+          {items.length} openstaande aanmeldingen — pagina {currentPage + 1} van {pageCount}
+        </p>
+      )}
+      {pageItems.map((item) => (
         <Card key={item.id}>
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
@@ -122,6 +137,29 @@ export function AanmeldingenList({ applications }: { applications: Application[]
           </div>
         </Card>
       ))}
+      {pageCount > 1 && (
+        <div className="flex items-center justify-between pt-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage === 0}
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+          >
+            Vorige
+          </Button>
+          <span className="text-sm text-ink-500">
+            Pagina {currentPage + 1} van {pageCount}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage >= pageCount - 1}
+            onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+          >
+            Volgende
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
