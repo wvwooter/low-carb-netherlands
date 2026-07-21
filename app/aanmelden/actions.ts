@@ -4,9 +4,11 @@ import { redirect } from "next/navigation";
 import { createSupabaseServiceRoleClient } from "@/lib/supabase/server";
 import { normalizeWebsiteUrl } from "@/lib/format-website";
 import {
-  sendAdminApplicationNotification,
+  sendProfessionalApplicationNotification,
   sendApplicationConfirmationEmail,
 } from "@/lib/email";
+import { PROFESSION_LABELS, type ProfessionCategory } from "@/lib/types";
+import { SITE_URL } from "@/lib/constants";
 
 // Zeer eenvoudige rate limiting op basis van in-memory map (per proces).
 // Voor productie: vervang door bv. Upstash Ratelimit of Supabase-tabel.
@@ -96,14 +98,28 @@ export async function submitProfessionalApplication(formData: FormData) {
     console.info("[aanmelding:demo — Supabase niet geconfigureerd]", application);
   }
 
-  await Promise.all([
-    sendApplicationConfirmationEmail({ to: email, voornaam }),
-    sendAdminApplicationNotification({
-      naam: `${voornaam} ${achternaam}`,
-      beroep,
-      email,
-    }),
-  ]);
+  // Mailfouten mogen de aanmelding zelf nooit laten mislukken: de
+  // aanmelding staat al veilig in Supabase. Deze try/catch is een extra
+  // vangnet bovenop de foutafhandeling die lib/email.ts zelf al doet
+  // (sendEmail() geeft altijd een resultaat terug en gooit nooit door).
+  try {
+    await Promise.all([
+      sendApplicationConfirmationEmail({ to: email, voornaam }),
+      sendProfessionalApplicationNotification({
+        naam: `${voornaam} ${achternaam}`,
+        beroep: PROFESSION_LABELS[beroep as ProfessionCategory] ?? beroep,
+        organisatie: application.organisatie,
+        email,
+        telefoonnummer: application.telefoonnummer,
+        plaats: application.plaats,
+        aangemeldOp: new Date(),
+        beheerLink: `${SITE_URL}/beheer/aanmeldingen`,
+      }),
+    ]);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "onbekende fout";
+    console.error(`[aanmelden] E-mailnotificatie mislukt, aanmelding staat wel opgeslagen: ${message}`);
+  }
 
   redirect("/aanmelden/bedankt");
 }
