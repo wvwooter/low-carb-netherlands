@@ -45,6 +45,7 @@ export interface Professional {
   big_registratie: string | null;
   organisatie: string | null;
   locatie: string;
+  land: string;
   provincie: string;
   postcode: string | null;
   website: string | null;
@@ -74,6 +75,7 @@ export interface ProfessionalApplication {
   adres: string;
   postcode: string;
   plaats: string;
+  land: string;
   provincie: string;
   website: string;
   email: string;

@@ -43,6 +43,7 @@ export default async function ProfessionalDetailPage({ params }: Props) {
               bio: professional.bio,
               organisatie: professional.organisatie,
               provincie: professional.provincie,
+              land: professional.land,
               profielfoto_url: professional.profielfoto_url,
               website: professional.website,
             })
@@ -100,7 +101,10 @@ export default async function ProfessionalDetailPage({ params }: Props) {
           <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
             <div>
               <dt className="text-xs uppercase tracking-wide text-ink-500">Locatie</dt>
-              <dd className="text-ink-800">{professional.locatie}, {professional.provincie}</dd>
+              <dd className="text-ink-800">
+                {professional.locatie}, {professional.provincie}
+                {professional.land === "BE" ? " (België)" : ""}
+              </dd>
             </div>
             {professional.big_registratie && (
               <div>

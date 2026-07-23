@@ -7,9 +7,9 @@ import {
   TextareaField,
 } from "@/components/ui/Field";
 import { Button } from "@/components/ui/Button";
-import { PROVINCES } from "@/lib/constants";
 import { PROFESSION_LABELS } from "@/lib/types";
 import { submitProfessionalApplication } from "./actions";
+import { LocationFields } from "./LocationFields";
 import { canonical } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -93,16 +93,7 @@ export default function AanmeldenPage() {
               Locatie
             </legend>
             <TextField label="Adres" htmlFor="adres" name="adres" required />
-            <div className="grid gap-5 sm:grid-cols-3">
-              <TextField label="Postcode" htmlFor="postcode" name="postcode" required />
-              <TextField label="Plaats" htmlFor="plaats" name="plaats" required />
-              <SelectField label="Provincie" htmlFor="provincie" name="provincie" required defaultValue="">
-                <option value="" disabled>Kies provincie</option>
-                {PROVINCES.map((p) => (
-                  <option key={p} value={p}>{p}</option>
-                ))}
-              </SelectField>
-            </div>
+            <LocationFields />
             <CheckboxField id="online_begeleiding" name="online_begeleiding" label="Ik bied ook online begeleiding aan" />
           </fieldset>
 

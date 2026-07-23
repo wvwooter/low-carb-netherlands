@@ -15,6 +15,7 @@ interface Application {
   organisatie: string | null;
   plaats: string | null;
   provincie: string | null;
+  land: string | null;
   email: string;
   telefoonnummer: string | null;
   motivatie: string | null;
@@ -102,6 +103,7 @@ export function AanmeldingenList({ applications }: { applications: Application[]
                 {item.organisatie ? `${item.organisatie} — ` : ""}
                 {item.plaats}
                 {item.provincie ? `, ${item.provincie}` : ""}
+                {item.land === "BE" ? " (België)" : ""}
               </p>
               <p className="mt-1 text-sm text-ink-700">
                 {item.email}

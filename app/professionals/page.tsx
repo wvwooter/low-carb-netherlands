@@ -20,6 +20,7 @@ export const dynamic = "force-dynamic";
 interface Props {
   searchParams: {
     beroep?: string;
+    land?: string;
     provincie?: string;
     plaats?: string;
     specialisatie?: string;
@@ -55,6 +56,7 @@ export default async function ProfessionalsPage({ searchParams }: Props) {
       p.beroep !== (searchParams.beroep as ProfessionCategory)
     )
       return false;
+    if (searchParams.land && p.land !== searchParams.land) return false;
     if (searchParams.provincie && p.provincie !== searchParams.provincie)
       return false;
     if (

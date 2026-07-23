@@ -116,6 +116,7 @@ interface PersonJsonLdInput {
   bio: string;
   organisatie?: string | null;
   provincie: string;
+  land?: string | null;
   profielfoto_url?: string | null;
   website?: string | null;
 }
@@ -133,7 +134,7 @@ export function professionalJsonLd(p: PersonJsonLdInput) {
     address: {
       "@type": "PostalAddress",
       addressRegion: p.provincie,
-      addressCountry: "NL",
+      addressCountry: p.land === "BE" ? "BE" : "NL",
     },
     ...(p.organisatie
       ? { worksFor: { "@type": "Organization", name: p.organisatie } }

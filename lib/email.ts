@@ -144,6 +144,7 @@ export async function sendProfessionalApplicationNotification(params: {
   email: string;
   telefoonnummer?: string | null;
   plaats?: string | null;
+  land?: string | null;
   aangemeldOp: Date;
   beheerLink?: string | null;
 }) {
@@ -163,6 +164,9 @@ export async function sendProfessionalApplicationNotification(params: {
     timeZone: "Europe/Amsterdam",
   }).format(params.aangemeldOp);
 
+  const landLabel =
+    params.land === "BE" ? "België" : params.land === "NL" ? "Nederland" : "—";
+
   const rows: Array<[string, string]> = [
     ["Naam", params.naam],
     ["Beroep", params.beroep],
@@ -170,6 +174,7 @@ export async function sendProfessionalApplicationNotification(params: {
     ["E-mailadres", params.email],
     ["Telefoonnummer", params.telefoonnummer || "—"],
     ["Vestigingsplaats", params.plaats || "—"],
+    ["Land", landLabel],
     ["Datum/tijd aanmelding", `${datumTijd} (Nederlandse tijd)`],
   ];
 

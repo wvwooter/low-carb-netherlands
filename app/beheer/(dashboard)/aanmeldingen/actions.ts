@@ -42,16 +42,21 @@ export async function approveApplication(applicationId: string) {
     slug = `${baseSlug}-${attempt + 1}`;
   }
 
+  const land = application.land === "BE" ? "BE" : "NL";
+  const landNaam = land === "BE" ? "België" : "Nederland";
   const geocodeQuery = [
     application.adres,
     application.postcode,
     application.plaats,
     application.provincie,
-    "Nederland",
+    landNaam,
   ]
     .filter(Boolean)
     .join(", ");
-  const coords = await geocodeAddress(geocodeQuery);
+  const coords = await geocodeAddress(
+    geocodeQuery,
+    land === "BE" ? "be" : "nl"
+  );
 
   const { error: insertError } = await supabase.from("professionals").insert({
     slug,
@@ -60,6 +65,7 @@ export async function approveApplication(applicationId: string) {
     big_registratie: application.registratienummer || null,
     organisatie: application.organisatie || null,
     locatie: application.plaats || application.adres || "Onbekend",
+    land,
     provincie: application.provincie || "Onbekend",
     postcode: application.postcode || null,
     website: application.website || null,

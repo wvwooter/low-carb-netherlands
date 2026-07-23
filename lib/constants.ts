@@ -2,11 +2,18 @@ export const SITE_NAME = "Low Carb Netherlands";
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://lowcarbnetherlands.nl";
 export const SITE_TAGLINE =
-  "Het Nederlandse platform voor low-carb zorg, wetenschap en professionals.";
+  "Het Nederlandstalige platform voor low-carb zorg, wetenschap en professionals in Nederland en België.";
 export const SITE_DESCRIPTION =
   "Betrouwbare informatie en deskundige begeleiding rond koolhydraatbeperking, insulineresistentie en metabole gezondheid.";
 
-export const PROVINCES = [
+export const COUNTRIES = [
+  { code: "NL", label: "Nederland" },
+  { code: "BE", label: "België" },
+] as const;
+
+export type CountryCode = (typeof COUNTRIES)[number]["code"];
+
+export const PROVINCES_NL = [
   "Drenthe",
   "Flevoland",
   "Friesland",
@@ -20,6 +27,28 @@ export const PROVINCES = [
   "Zeeland",
   "Zuid-Holland",
 ] as const;
+
+export const PROVINCES_BE = [
+  "Antwerpen",
+  "Henegouwen",
+  "Limburg",
+  "Luik",
+  "Luxemburg",
+  "Namen",
+  "Oost-Vlaanderen",
+  "Vlaams-Brabant",
+  "Waals-Brabant",
+  "West-Vlaanderen",
+] as const;
+
+export const PROVINCES_BY_COUNTRY: Record<CountryCode, readonly string[]> = {
+  NL: PROVINCES_NL,
+  BE: PROVINCES_BE,
+};
+
+// Achterwaarts compatibel: bestaande code die simpelweg "de provincies" nodig
+// had (vóór de uitbreiding naar België) verwijst nog naar PROVINCES_NL.
+export const PROVINCES = PROVINCES_NL;
 
 export const SPECIALTIES = [
   "Insulineresistentie",

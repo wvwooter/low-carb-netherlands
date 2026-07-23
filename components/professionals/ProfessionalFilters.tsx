@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { PROVINCES, SPECIALTIES } from "@/lib/constants";
+import { COUNTRIES, PROVINCES_BY_COUNTRY, SPECIALTIES, type CountryCode } from "@/lib/constants";
 import { PROFESSION_LABELS } from "@/lib/types";
 
 export function ProfessionalFilters() {
@@ -20,7 +20,7 @@ export function ProfessionalFilters() {
 
   return (
     <form
-      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
+      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6"
       aria-label="Professionals filteren"
       onSubmit={(e) => e.preventDefault()}
     >
@@ -44,6 +44,33 @@ export function ProfessionalFilters() {
       </div>
 
       <div>
+        <label htmlFor="filter-land" className="label">
+          Land
+        </label>
+        <select
+          id="filter-land"
+          className="field"
+          defaultValue={searchParams.get("land") ?? ""}
+          onChange={(e) => {
+            // Land wisselen maakt een eerder gekozen provincie ongeldig
+            // (NL en BE hebben allebei een "Limburg") — dus resetten.
+            const params = new URLSearchParams(searchParams.toString());
+            if (e.target.value) params.set("land", e.target.value);
+            else params.delete("land");
+            params.delete("provincie");
+            router.push(`/professionals?${params.toString()}`);
+          }}
+        >
+          <option value="">Nederland en België</option>
+          {COUNTRIES.map((c) => (
+            <option key={c.code} value={c.code}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
         <label htmlFor="filter-provincie" className="label">
           Provincie
         </label>
@@ -54,7 +81,12 @@ export function ProfessionalFilters() {
           onChange={(e) => updateParam("provincie", e.target.value)}
         >
           <option value="">Alle provincies</option>
-          {PROVINCES.map((p) => (
+          {(searchParams.get("land")
+            ? PROVINCES_BY_COUNTRY[searchParams.get("land") as CountryCode]
+            : Array.from(
+                new Set([...PROVINCES_BY_COUNTRY.NL, ...PROVINCES_BY_COUNTRY.BE])
+              )
+          ).map((p) => (
             <option key={p} value={p}>
               {p}
             </option>

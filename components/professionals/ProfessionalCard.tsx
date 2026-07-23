@@ -42,6 +42,7 @@ export function ProfessionalCard({ professional }: { professional: Professional 
       <div className="mt-auto flex items-center justify-between border-t border-ink-100 pt-4">
         <span className="text-sm text-ink-500">
           {professional.locatie}, {professional.provincie}
+          {professional.land === "BE" ? " (België)" : ""}
         </span>
         <Link
           href={`/professionals/${professional.slug}`}

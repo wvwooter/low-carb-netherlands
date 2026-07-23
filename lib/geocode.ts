@@ -7,7 +7,8 @@ import "server-only";
  * geocoderen van een nieuw goedgekeurde professional.
  */
 export async function geocodeAddress(
-  query: string
+  query: string,
+  countryCode: "nl" | "be" = "nl"
 ): Promise<{ latitude: number; longitude: number } | null> {
   if (!query.trim()) return null;
 
@@ -15,7 +16,7 @@ export async function geocodeAddress(
     const url = new URL("https://nominatim.openstreetmap.org/search");
     url.searchParams.set("format", "jsonv2");
     url.searchParams.set("limit", "1");
-    url.searchParams.set("countrycodes", "nl");
+    url.searchParams.set("countrycodes", countryCode);
     url.searchParams.set("q", query);
 
     const response = await fetch(url.toString(), {
