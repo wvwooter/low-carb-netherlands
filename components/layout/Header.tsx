@@ -16,7 +16,7 @@ import { MAIN_NAV } from "@/lib/constants";
 // CTA-knop paste de balk niet meer op een gewoon breed scherm (~1088px
 // beschikbare breedte binnen container-page). Door deze drie te bundelen
 // blijft alles ruim binnen de breedte.
-const MORE_HREFS = ["/boeken", "/recepten", "/hulpmiddelen"];
+const MORE_HREFS = ["/boeken", "/recepten", "/hulpmiddelen", "/podcasts"];
 const HIDDEN_HREFS = ["/", "/aanmelden", "/contact", ...MORE_HREFS];
 
 const DESKTOP_NAV = MAIN_NAV.filter(

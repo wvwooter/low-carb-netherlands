@@ -44,6 +44,7 @@ export const MAIN_NAV = [
   { href: "/hulpmiddelen", label: "Hulpmiddelen" },
   { href: "/evenementen", label: "Evenementen" },
   { href: "/videos", label: "Video's" },
+  { href: "/podcasts", label: "Podcasts" },
   { href: "/aanmelden", label: "Aanmelden" },
   { href: "/contact", label: "Contact" },
 ] as const;
